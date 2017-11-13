@@ -30,8 +30,8 @@ public class CustomDateAdapter extends ArrayAdapter<Date> {
         TextView monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
         TextView dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
 
-        monthTextView.setText(date.month);
-        dayTextView.setText(date.day);
+        monthTextView.setText(date.getMonth());
+        dayTextView.setText(date.getDay());
 
         return convertView;
     }

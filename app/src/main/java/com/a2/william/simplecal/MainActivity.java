@@ -8,7 +8,7 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
         CustomDateAdapter adapter;
-        DateListHandler dlh = new DateListHandler();
+        DateStore dateStore = DateStoreFactory.dateStore();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        adapter = new CustomDateAdapter(this, dlh.getList());
+        adapter = new CustomDateAdapter(this, dateStore.getList());
         ListView listView = (ListView) findViewById(R.id.DateList);
         listView.setAdapter(adapter);
     }

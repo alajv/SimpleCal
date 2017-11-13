@@ -6,11 +6,12 @@ import java.util.ArrayList;
  * Created by William on 2017-11-10.
  */
 
-public class DateListHandler {
+public class FakeDateStore implements DateStore{
 
-    public ArrayList<Date> getList(){
+    ArrayList<Date> dummyDate;
 
-        ArrayList<Date> dummyDate = new ArrayList<Date>();
+    public FakeDateStore(){
+        dummyDate = new ArrayList();
 
         dummyDate.add(new Date("Januari", "1"));
         dummyDate.add(new Date("Januari", "2"));
@@ -25,8 +26,9 @@ public class DateListHandler {
         dummyDate.add(new Date("Januari", "11"));
         dummyDate.add(new Date("Januari", "12"));
         dummyDate.add(new Date("Januari", "13"));
+    }
 
-
+    public ArrayList<Date> getList(){
 
         return dummyDate;
     }

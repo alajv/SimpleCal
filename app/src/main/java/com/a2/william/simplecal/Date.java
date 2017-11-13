@@ -7,13 +7,20 @@ package com.a2.william.simplecal;
 
 public class Date {
 
-    public String month;
-    public String day;
+    private String month;
+    private String day;
 
     public Date(String month, String day){
 
         this.month=month;
         this.day=day;
+    }
+
+    public String getMonth(){
+        return month;
+    }
+    public String getDay(){
+        return day;
     }
 }
 
