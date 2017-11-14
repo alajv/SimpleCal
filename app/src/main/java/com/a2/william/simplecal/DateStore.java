@@ -9,6 +9,4 @@ import java.util.ArrayList;
 public interface DateStore {
 
     ArrayList<Date> getList();
-
-
 }

@@ -13,19 +13,19 @@ public class FakeDateStore implements DateStore{
     public FakeDateStore(){
         dummyDate = new ArrayList();
 
-        dummyDate.add(new Date("Januari", "1"));
-        dummyDate.add(new Date("Januari", "2"));
-        dummyDate.add(new Date("Januari", "3"));
-        dummyDate.add(new Date("Januari", "4"));
-        dummyDate.add(new Date("Januari", "5"));
-        dummyDate.add(new Date("Januari", "6"));
-        dummyDate.add(new Date("Januari", "7"));
-        dummyDate.add(new Date("Januari", "8"));
-        dummyDate.add(new Date("Januari", "9"));
-        dummyDate.add(new Date("Januari", "10"));
-        dummyDate.add(new Date("Januari", "11"));
-        dummyDate.add(new Date("Januari", "12"));
-        dummyDate.add(new Date("Januari", "13"));
+        dummyDate.add(new Date("Januari", "1", "2017"));
+        dummyDate.add(new Date("Januari", "2", "2017"));
+        dummyDate.add(new Date("Januari", "3", "2017"));
+        dummyDate.add(new Date("Januari", "4", "2017"));
+        dummyDate.add(new Date("Januari", "5", "2017"));
+        dummyDate.add(new Date("Januari", "6", "2017"));
+        dummyDate.add(new Date("Januari", "7", "2017"));
+        dummyDate.add(new Date("Januari", "8", "2017"));
+        dummyDate.add(new Date("Januari", "9", "2017"));
+        dummyDate.add(new Date("Februari", "1", "2017"));
+        dummyDate.add(new Date("Februari", "2", "2017"));
+        dummyDate.add(new Date("Februari", "3", "2017"));
+        dummyDate.add(new Date("Februari", "4", "2017"));
     }
 
     public ArrayList<Date> getList(){

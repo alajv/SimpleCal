@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 
 public class CustomDateAdapter extends ArrayAdapter<Date> {
+
     public CustomDateAdapter(Context context, ArrayList<Date> date){
         super(context, 0, date);
     }
@@ -26,7 +27,6 @@ public class CustomDateAdapter extends ArrayAdapter<Date> {
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.date_list_item, parent, false);
         }
-
         TextView monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
         TextView dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
 
