@@ -8,8 +8,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-        CustomDateAdapter adapter;
-        //TestDateAdapter adapter;
+        //CustomDateAdapter adapter;
+        TestDateAdapter adapter;
         DateStore dateStore = DateStoreFactory.dateStore();
 
     @Override
@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        adapter = new CustomDateAdapter(this, dateStore.getList());
-        //adapter = new TestDateAdapter(this, dateStore.getList());
+        //adapter = new CustomDateAdapter(this, dateStore.getList());
+        adapter = new TestDateAdapter(this, dateStore.getList());
         ListView listView = (ListView) findViewById(R.id.DateList);
         listView.setAdapter(adapter);
     }
