@@ -22,17 +22,32 @@ public class CustomDateAdapter extends ArrayAdapter<Date> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
 
-        Date date = getItem(position);
+        CustomDateAdapter.ViewHolderDay viewHolderDay;
 
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.date_list_item, parent, false);
+
+            viewHolderDay = new CustomDateAdapter.ViewHolderDay();
+            viewHolderDay.dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
+            viewHolderDay.monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
+
+            convertView.setTag(viewHolderDay);
+        }else{
+
+            viewHolderDay = (CustomDateAdapter.ViewHolderDay) convertView.getTag();
         }
-        TextView monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
-        TextView dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
 
-        monthTextView.setText(date.getMonth());
-        dayTextView.setText(date.getDay());
+        Date date = getItem(position);
 
+        if(date != null){
+            viewHolderDay.dayTextView.setText(date.getDay());
+            viewHolderDay.monthTextView.setText(date.getMonth());
+        }
         return convertView;
+    }
+
+    static class ViewHolderDay{
+        TextView dayTextView;
+        TextView monthTextView;
     }
 }
