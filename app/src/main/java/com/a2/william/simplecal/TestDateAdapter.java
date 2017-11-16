@@ -22,43 +22,48 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
         super(context, 0, date);
     }
 
-    int type;
     Date date;
+    Date date2;
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public int getItemViewType(int position){
+        Log.d(TAG, "getItemViewType: "+position);
 
-        ViewHolderDay viewHolderDay;
-        ViewHolderMonth viewHolderMonth;
         date = getItem(position);
 
-        if(position>0) {
-            if (!date.getMonth().equalsIgnoreCase(getItem(position--).getMonth())) {
-                type = 1;
-            } else {
-                type = 2;
-            }
+        if(position==0||date.getDayNr()==1){
+            return 0;
+        }else{
+            return 1;
         }
-        if(position==0){
-            type = 1;
-        }
+    }
 
-        Log.d(TAG, "getView: "+position);
-        switch(type){
-            case 1:
-                Log.d(TAG, "getView: In case 1");
-                if (convertView == null||convertView.getTag().getClass()!=ViewHolderMonth.class) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.month_list_item, parent, false);
+    @Override
+    public int getViewTypeCount(){
+        return 2;
+    }
 
-                viewHolderMonth = new ViewHolderMonth();
-                viewHolderMonth.monthHeaderTextView = (TextView) convertView.findViewById(R.id.monthHeader);
-                viewHolderMonth.yearHeaderTextView = (TextView) convertView.findViewById(R.id.yearHeader);
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
 
-                convertView.setTag(viewHolderMonth);
+        int type = getItemViewType(position);
+
+        switch (type){
+            case 0: Log.d(TAG, "getView: case 0");
+
+                ViewHolderMonth  viewHolderMonth;
+                if (convertView == null) {
+
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.month_list_item, parent, false);
+                    viewHolderMonth = new ViewHolderMonth();
+                    viewHolderMonth.monthHeaderTextView = (TextView) convertView.findViewById(R.id.monthHeader);
+                    viewHolderMonth.yearHeaderTextView = (TextView) convertView.findViewById(R.id.yearHeader);
+
+                    convertView.setTag(viewHolderMonth);
+
                 } else {
                     viewHolderMonth = (ViewHolderMonth) convertView.getTag();
                 }
-
                 date = getItem(position);
 
                 if (date != null) {
@@ -67,30 +72,30 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
                 }
                 return convertView;
 
-            case 2:
-                Log.d(TAG, "getView: Case 2");
-            if (convertView == null||convertView.getTag().getClass()!=ViewHolderDay.class) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.date_list_item, parent, false);
+            case 1: Log.d(TAG, "getView: Case 1");
 
-                viewHolderDay = new ViewHolderDay();
-                viewHolderDay.dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
-                viewHolderDay.monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
+                ViewHolderDay viewHolderDay;
+                if (convertView == null) {
 
-                convertView.setTag(viewHolderDay);
-            } else {
-                viewHolderDay = (ViewHolderDay) convertView.getTag();
-            }
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.date_list_item, parent, false);
+                    viewHolderDay = new ViewHolderDay();
+                    viewHolderDay.dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
+                    viewHolderDay.monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
 
-            date = getItem(position);
+                    convertView.setTag(viewHolderDay);
 
-            if (date != null) {
-                viewHolderDay.dayTextView.setText(date.getDay());
-                viewHolderDay.monthTextView.setText(date.getMonth());
-            }
-            return convertView;
+                } else {
+                    viewHolderDay = (ViewHolderDay) convertView.getTag();
+                }
+                date = getItem(position);
+                if (date != null) {
+                    viewHolderDay.dayTextView.setText(date.getDay());
+                    viewHolderDay.monthTextView.setText(date.getMonth());
+                }
+                return convertView;
 
-            default:
-                Log.d(TAG, "getView: Default");
+            default: Log.d(TAG, "getView: default");
+
                 break;
         }
         return convertView;
