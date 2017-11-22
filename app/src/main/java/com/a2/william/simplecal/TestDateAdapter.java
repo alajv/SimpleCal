@@ -23,7 +23,6 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
     }
 
     Date date;
-    Date date2;
 
     @Override
     public int getItemViewType(int position){
@@ -31,7 +30,7 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
 
         date = getItem(position);
 
-        if(position==0||date.getDayNr()==1){
+        if(position==0||date.getDayNr()==0){
             return 0;
         }else{
             return 1;
