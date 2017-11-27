@@ -20,6 +20,7 @@ public class Date {
         this.year=year;
         this.monthNr =monthNr;
         this.dayNr= dayNr;
+
     }
 
     public String getMonth(){
@@ -37,6 +38,7 @@ public class Date {
     public int getDayNr(){
         return dayNr;
     }
+
 }
 
 

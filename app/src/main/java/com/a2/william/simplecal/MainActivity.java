@@ -2,15 +2,21 @@ package com.a2.william.simplecal;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.AbsListView;
+import android.widget.ExpandableListView;
+import android.widget.NumberPicker;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-        //CustomDateAdapter adapter;
-        TestDateAdapter adapter;
-        //TestAdapterTwo adapter;
+        int lastExpandedPosition = -1;
+        ExpandableDateAdapter adapter;
+        ExpandableListView expListView;
+        HashMap<Date, List<String>> dummyChildren;
         DateStore dateStore = DateStoreFactory.dateStore();
 
     @Override
@@ -18,11 +24,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        expListView = (ExpandableListView) findViewById(R.id.dateList);
 
-        //adapter = new CustomDateAdapter(this, dateStore.getList());
-        adapter = new TestDateAdapter(this, dateStore.getList());
-        //adapter = new TestAdapterTwo(this, dateStore.getList());
-        ListView listView = (ListView) findViewById(R.id.DateList);
-        listView.setAdapter(adapter);
+        prepareListData();
+        adapter = new ExpandableDateAdapter(this, dateStore.getList(), dummyChildren);
+
+        expListView.setAdapter(adapter);
+
+        expListView.setOnScrollListener(new onScrollListener(){
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount){
+                int i = firstVisibleItem;
+
+                getActionBar().setTitle(dateStore.getList().get(i).getMonth());
+            }
+        });
+
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if (lastExpandedPosition != -1 && groupPosition != lastExpandedPosition){
+                    expListView.collapseGroup(lastExpandedPosition);
+                }
+                lastExpandedPosition=groupPosition;
+            }
+        });
+
+    }
+
+
+    public void prepareListData(){
+        dummyChildren = new HashMap<Date, List<String>>();
+
+        List<String> sl = new ArrayList<>();
+
+        sl.add("Add event");
+
+        for(int i=0; i<dateStore.getList().size();i++) {
+
+            if(dateStore.getList().get(i).getDayNr()==0||dateStore.getList().indexOf(i)==0){
+                dummyChildren.put(dateStore.getList().get(i), new ArrayList<String>());
+            }else {
+                dummyChildren.put(dateStore.getList().get(i), sl);
+            }
+        }
     }
 }

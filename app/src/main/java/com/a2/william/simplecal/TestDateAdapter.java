@@ -42,6 +42,8 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
         return 2;
     }
 
+
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 

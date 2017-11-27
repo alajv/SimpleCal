@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.a2.william.simplecal.MainActivity">
 
-    <ListView
-        android:id="@+id/DateList"
+    <ExpandableListView
+        android:id="@+id/dateList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"/>
 </android.support.constraint.ConstraintLayout>

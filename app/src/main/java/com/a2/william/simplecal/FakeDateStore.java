@@ -1,6 +1,8 @@
 package com.a2.william.simplecal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by William on 2017-11-10.
@@ -10,8 +12,12 @@ public class FakeDateStore implements DateStore{
 
     ArrayList<Date> dummyDate;
 
+
+
     public FakeDateStore(){
-        dummyDate = new ArrayList();
+        dummyDate = new ArrayList<>();
+
+
 
         dummyDate.add(new Date("Januari", "0", "2017",1, 0));
         dummyDate.add(new Date("Januari", "1", "2017",1, 1));
@@ -34,4 +40,5 @@ public class FakeDateStore implements DateStore{
 
         return dummyDate;
     }
+
 }
