@@ -2,9 +2,10 @@ package com.a2.william.simplecal;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.AbsListView;
-import android.widget.ExpandableListView;
 import android.widget.NumberPicker;
+import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +14,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+    
         int lastExpandedPosition = -1;
         ExpandableDateAdapter adapter;
         ExpandableListView expListView;
@@ -31,16 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         expListView.setAdapter(adapter);
 
-        expListView.setOnScrollListener(new onScrollListener(){
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount){
-                int i = firstVisibleItem;
-
-                getActionBar().setTitle(dateStore.getList().get(i).getMonth());
-            }
-        });
-
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -51,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        expListView.setOnScrollListener(new AbsListView.OnScrollListener(){
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState){
+            }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
+                    getSupportActionBar().setTitle(dateStore.getList().get(firstVisibleItem).getMonth());
+            }
+        });
     }
 
 

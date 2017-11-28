@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
         this._listDateHeader = listDateHeader;
         this._listDateChild = listDateChild;
     }
+
+
 
     @Override
     public Object getChild(int groupPosition, int childPosition){

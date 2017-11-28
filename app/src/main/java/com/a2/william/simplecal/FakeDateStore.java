@@ -33,7 +33,16 @@ public class FakeDateStore implements DateStore{
         dummyDate.add(new Date("Februari", "1", "2017",2, 1));
         dummyDate.add(new Date("Februari", "2", "2017",2, 2));
         dummyDate.add(new Date("Februari", "3", "2017",2, 3));
-        dummyDate.add(new Date("Februari", "4", "2017",2, 4));
+        dummyDate.add(new Date("Februari", "5", "2017",2, 5));
+        dummyDate.add(new Date("Februari", "6", "2017",2, 6));
+        dummyDate.add(new Date("Februari", "7", "2017",2, 7));
+        dummyDate.add(new Date("Februari", "8", "2017",2, 8));
+        dummyDate.add(new Date("Februari", "9", "2017",2, 9));
+        dummyDate.add(new Date("Februari", "10", "2017",2, 10));
+        dummyDate.add(new Date("Februari", "11", "2017",2, 11));
+        dummyDate.add(new Date("Februari", "12", "2017",2, 12));
+        dummyDate.add(new Date("Februari", "13", "2017",2, 13));
+
     }
 
     public ArrayList<Date> getList(){
