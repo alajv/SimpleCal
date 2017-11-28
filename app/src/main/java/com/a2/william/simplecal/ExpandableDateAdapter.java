@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
@@ -41,7 +40,6 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
         return this._listDateChild.get(this._listDateHeader.get(groupPosition)).get(childPosition);
     }
 
-
     @Override
     public long getChildId(int groupPosition, int childPosition){
         return childPosition;
@@ -54,11 +52,9 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
         final String addEventButtonText = (String) getChild(groupPosition, childPosition);
 
         if(convertView == null){
-            Log.d(TAG, "getChildView: convertView = null");
             LayoutInflater inflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.add_date_event_layout, null);
         }
-        Log.d(TAG, "getChildView: convertView != null");
         Button addEvent = (Button) convertView.findViewById(R.id.addEventButton);
         if (addEvent == null) {
             Log.d(TAG, "Knappen är null!");
