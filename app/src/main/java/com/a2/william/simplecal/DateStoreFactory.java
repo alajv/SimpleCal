@@ -7,6 +7,6 @@ package com.a2.william.simplecal;
 public class DateStoreFactory {
 
     public static DateStore dateStore(){
-        return new FakeDateStore();
+        return new CalendarDateStore();
     }
 }

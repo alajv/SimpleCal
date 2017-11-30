@@ -1,5 +1,8 @@
 package com.a2.william.simplecal;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 
 /**
  * Created by William on 2017-11-13.
@@ -7,38 +10,40 @@ package com.a2.william.simplecal;
 
 public class Date {
 
-    private String month;
-    private String day;
-    private String year;
-    private int monthNr;
-    private int dayNr;
+    Calendar cal = Calendar.getInstance();
 
-    public Date(String month, String day, String year, int monthNr, int dayNr){
+    private boolean realDate;
+    //private int year;
+    //private int month;
+    //private int dayNr;
 
-        this.month=month;
-        this.day=day;
-        this.year=year;
-        this.monthNr =monthNr;
-        this.dayNr= dayNr;
+    public Date( int year, int month, int dayOfMonth, boolean realDate){
 
-    }
+        cal.set(year, month, dayOfMonth);
+        this.realDate=realDate;
+        //this.year=year;
+        //this.dayOfMonth= dayOfMonth;
 
-    public String getMonth(){
-        return month;
-    }
-    public String getDay(){
-        return day;
-    }
-    public String getYear(){
-        return year;
-    }
-    public int getMonthNr(){
-        return monthNr;
-    }
-    public int getDayNr(){
-        return dayNr;
     }
 
+    public String getMonthString(){
+        return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
+    }
+    public String getDayOfWeekString(){
+        return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+    }
+    public String getDayOfMonthString(){
+        return String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
+    }
+    public String getYearString(){
+        return String.valueOf(cal.get(Calendar.YEAR));
+    }
+    public boolean getRealDate(){
+        return realDate;
+    }
+    public int getDayOfMonth(){
+        return cal.get(Calendar.DAY_OF_MONTH);
+    }
 }
 
 

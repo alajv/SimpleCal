@@ -30,7 +30,7 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
 
         date = getItem(position);
 
-        if(position==0||date.getDayNr()==0){
+        if(position==0||date.getDayOfMonth()==0){
             return 0;
         }else{
             return 1;
@@ -68,8 +68,8 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
                 date = getItem(position);
 
                 if (date != null) {
-                    viewHolderMonth.monthHeaderTextView.setText(date.getMonth());
-                    viewHolderMonth.yearHeaderTextView.setText(date.getYear());
+                    viewHolderMonth.monthHeaderTextView.setText(date.getMonthString());
+                    viewHolderMonth.yearHeaderTextView.setText(date.getYearString());
                 }
                 return convertView;
 
@@ -80,8 +80,8 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
 
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.date_list_item, parent, false);
                     viewHolderDay = new ViewHolderDay();
-                    viewHolderDay.dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
-                    viewHolderDay.monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
+                    viewHolderDay.dayTextView = (TextView) convertView.findViewById(R.id.day_of_month);
+                    viewHolderDay.monthTextView = (TextView) convertView.findViewById(R.id.day_of_week);
 
                     convertView.setTag(viewHolderDay);
 
@@ -90,8 +90,8 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
                 }
                 date = getItem(position);
                 if (date != null) {
-                    viewHolderDay.dayTextView.setText(date.getDay());
-                    viewHolderDay.monthTextView.setText(date.getMonth());
+                    viewHolderDay.dayTextView.setText(date.getDayOfWeekString());
+                    viewHolderDay.monthTextView.setText(date.getMonthString());
                 }
                 return convertView;
 

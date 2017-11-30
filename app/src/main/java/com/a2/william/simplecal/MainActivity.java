@@ -2,9 +2,7 @@ package com.a2.william.simplecal;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.AbsListView;
-import android.widget.NumberPicker;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
-                    getSupportActionBar().setTitle(dateStore.getList().get(firstVisibleItem).getMonth());
+                    getSupportActionBar().setTitle(dateStore.getList().get(firstVisibleItem).getMonthString());
             }
         });
     }
@@ -65,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i=0; i<dateStore.getList().size();i++) {
 
-            if(dateStore.getList().get(i).getDayNr()==0||dateStore.getList().indexOf(i)==0){
+            if(dateStore.getList().get(i).getRealDate()==false){
                 dummyChildren.put(dateStore.getList().get(i), new ArrayList<String>());
             }else {
                 dummyChildren.put(dateStore.getList().get(i), sl);

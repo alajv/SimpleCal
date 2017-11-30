@@ -66,7 +66,6 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
     @Override
     public int getChildrenCount(int groupPosition){
        return this._listDateChild.get(this._listDateHeader.get(groupPosition)).size();
-
     }
 
     @Override
@@ -92,7 +91,7 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
     public int getGroupType(int groupPosition){
         date = (Date) getGroup(groupPosition);
 
-        if(groupPosition==0||date.getDayNr()==0){
+        if(date.getRealDate()==false){
             return 0;
         }else{
             return 1;
@@ -112,11 +111,11 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
                 LayoutInflater inflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.list_group, null);
             }
-            TextView dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
-            TextView monthTextView = (TextView) convertView.findViewById(R.id.monthTextView);
-            dayTextView.setTypeface(null, Typeface.BOLD);
-            dayTextView.setText(date.getDay());
-            monthTextView.setText(date.getMonth());
+            TextView dayOfMonthTextView = (TextView) convertView.findViewById(R.id.day_of_month);
+            TextView dayOfWeekTextView = (TextView) convertView.findViewById(R.id.day_of_week);
+            dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
+            dayOfMonthTextView.setText(date.getDayOfMonthString());
+            dayOfWeekTextView.setText(date.getDayOfWeekString());
 
             return convertView;
 
@@ -127,8 +126,8 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
                 }
                 TextView monthHeader = (TextView) convertView.findViewById(R.id.monthHeader);
                 TextView yearHeader = (TextView) convertView.findViewById(R.id.yearHeader);
-                monthHeader.setText(date.getMonth());
-                yearHeader.setText(date.getYear());
+                monthHeader.setText(date.getMonthString());
+                yearHeader.setText(date.getYearString());
                 convertView.setClickable(true);
                 convertView.setFocusable(false);
                 return convertView;
