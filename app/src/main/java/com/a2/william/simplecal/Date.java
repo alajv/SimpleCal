@@ -13,16 +13,11 @@ public class Date {
     Calendar cal = Calendar.getInstance();
 
     private boolean realDate;
-    //private int year;
-    //private int month;
-    //private int dayNr;
 
     public Date( int year, int month, int dayOfMonth, boolean realDate){
 
         cal.set(year, month, dayOfMonth);
         this.realDate=realDate;
-        //this.year=year;
-        //this.dayOfMonth= dayOfMonth;
 
     }
 
