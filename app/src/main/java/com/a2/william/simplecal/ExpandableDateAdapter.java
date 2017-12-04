@@ -7,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * Created by William on 2017-11-13.
@@ -23,22 +21,16 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
     
    private Context _context;
    private List<Date> _listDateHeader;
-   private Map<Date, List<DateEvent>> _listDateChild;
    Date date;
-   DateEvent dateEvent;
 
-    public ExpandableDateAdapter(Context context, List<Date> listDateHeader,
-                                 Map<Date, List<DateEvent>> listDateChild){
+    public ExpandableDateAdapter(Context context, List<Date> listDateHeader){
         this._context = context;
         this._listDateHeader = listDateHeader;
-        this._listDateChild = listDateChild;
     }
-
-
 
     @Override
     public Object getChild(int groupPosition, int childPosition){
-        return this._listDateChild.get(this._listDateHeader.get(groupPosition)).get(childPosition);
+        return this._listDateHeader.get(groupPosition).getDateEventList().get(childPosition);
     }
 
     @Override
@@ -67,8 +59,7 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition){
-
-        return this._listDateChild.get(this._listDateHeader.get(groupPosition)).size();
+        return this._listDateHeader.get(groupPosition).getDateEventList().size();
     }
 
     @Override
@@ -150,6 +141,4 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition){
         return true;
     }
-
-
 }
