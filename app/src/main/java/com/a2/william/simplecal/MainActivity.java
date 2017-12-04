@@ -59,17 +59,18 @@ public class MainActivity extends AppCompatActivity {
     public void prepareListData(){
         dummyChildren = new HashMap<>();
 
-        List deList = new ArrayList<DateEvent>();
+        /*List deList = new ArrayList<DateEvent>();
         deList.add(new DateEvent("Köpa snus", "21.30"));
         deList.add(new DateEvent("Äta bajs", "06.30"));
         deList.add(new DateEvent("Fixa julskinka", "16.00"));
-
+*/
+        dateStore.getList().get(1).addDateEvent("Spela pingis","21.00" );
         for(int i=0; i<dateStore.getList().size();i++) {
 
             if(dateStore.getList().get(i).getRealDate()==false){
                 dummyChildren.put(dateStore.getList().get(i), new ArrayList<String>());
             }else {
-                dummyChildren.put(dateStore.getList().get(i), deList);
+                dummyChildren.put(dateStore.getList().get(i), dateStore.getList().get(i).getDateEventList());
             }
         }
     }

@@ -1,7 +1,9 @@
 package com.a2.william.simplecal;
 
 import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Locale;
+import java.util.List;
 
 
 /**
@@ -11,11 +13,13 @@ import java.util.Locale;
 public class Date {
 
     Calendar cal = Calendar.getInstance();
+    List dateEventList;
 
     private boolean realDate;
 
     public Date( int year, int month, int dayOfMonth, boolean realDate){
 
+        dateEventList = new ArrayList<DateEvent>();
         cal.set(year, month, dayOfMonth);
         this.realDate=realDate;
     }
@@ -40,6 +44,12 @@ public class Date {
     }
     public int getMonth(){
         return cal.get(Calendar.MONTH);
+    }
+    public List getDateEventList(){
+        return dateEventList;
+    }
+    public void addDateEvent(String eventName, String startTime){
+        dateEventList.add(new DateEvent(eventName, startTime));
     }
 }
 
