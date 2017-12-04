@@ -10,8 +10,8 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by William on 2017-11-13.
@@ -23,11 +23,12 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
     
    private Context _context;
    private List<Date> _listDateHeader;
-   private HashMap<Date, List<String>> _listDateChild;
+   private Map<Date, List<DateEvent>> _listDateChild;
    Date date;
+   DateEvent dateEvent;
 
     public ExpandableDateAdapter(Context context, List<Date> listDateHeader,
-                                 HashMap<Date, List<String>> listDateChild){
+                                 Map<Date, List<DateEvent>> listDateChild){
         this._context = context;
         this._listDateHeader = listDateHeader;
         this._listDateChild = listDateChild;
@@ -49,23 +50,25 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent){
         Log.d(TAG, "getChildView: I go here");
 
-        final String addEventButtonText = (String) getChild(groupPosition, childPosition);
+        final DateEvent dateEvent = (DateEvent) getChild(groupPosition, childPosition);
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.add_date_event_layout, null);
+            convertView = inflater.inflate(R.layout.date_event_layout, null);
         }
-        Button addEvent = (Button) convertView.findViewById(R.id.addEventButton);
-        if (addEvent == null) {
-            Log.d(TAG, "Knappen är null!");
-        }
-        addEvent.setText(addEventButtonText);
+        TextView addStartHour = (TextView) convertView.findViewById(R.id.startTimeTextView);
+        TextView addEventName = (TextView) convertView.findViewById(R.id.eventName);
+
+        addStartHour.setText(dateEvent.getStartTime());
+        addEventName.setText(dateEvent.getEventName());
+
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition){
-       return this._listDateChild.get(this._listDateHeader.get(groupPosition)).size();
+
+        return this._listDateChild.get(this._listDateHeader.get(groupPosition)).size();
     }
 
     @Override

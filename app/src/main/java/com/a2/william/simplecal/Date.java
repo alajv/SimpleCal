@@ -18,7 +18,6 @@ public class Date {
 
         cal.set(year, month, dayOfMonth);
         this.realDate=realDate;
-
     }
 
     public String getMonthString(){

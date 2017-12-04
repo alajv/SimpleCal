@@ -8,6 +8,8 @@ import android.widget.ExpandableListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         int lastExpandedPosition = -1;
         ExpandableDateAdapter adapter;
         ExpandableListView expListView;
-        HashMap<Date, List<String>> dummyChildren;
+        Map dummyChildren;
         DateStore dateStore = DateStoreFactory.dateStore();
 
     @Override
@@ -55,18 +57,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void prepareListData(){
-        dummyChildren = new HashMap<Date, List<String>>();
+        dummyChildren = new HashMap<>();
 
-        List<String> sl = new ArrayList<>();
-
-        sl.add("Add event");
+        List deList = new ArrayList<DateEvent>();
+        deList.add(new DateEvent("Köpa snus", "21.30"));
+        deList.add(new DateEvent("Äta bajs", "06.30"));
+        deList.add(new DateEvent("Fixa julskinka", "16.00"));
 
         for(int i=0; i<dateStore.getList().size();i++) {
 
             if(dateStore.getList().get(i).getRealDate()==false){
                 dummyChildren.put(dateStore.getList().get(i), new ArrayList<String>());
             }else {
-                dummyChildren.put(dateStore.getList().get(i), sl);
+                dummyChildren.put(dateStore.getList().get(i), deList);
             }
         }
     }
