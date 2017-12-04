@@ -1,16 +1,12 @@
 package com.a2.william.simplecal;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     int lastExpandedPosition = -1;
     ExpandableDateAdapter adapter;
     ExpandableListView expListView;
-    //List dummyChildren;
+    FloatingActionButton fab;
     DateStore dateStore = DateStoreFactory.dateStore();
 
     @Override
@@ -27,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        expListView = (ExpandableListView) findViewById(R.id.dateList);
+        expListView = findViewById(R.id.dateList);
+        fab = findViewById(R.id.fab);
 
         prepareDummyEventListData();
         adapter = new ExpandableDateAdapter(this, dateStore.getList());
@@ -55,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void addEvent(View view){
+        Intent intent = new Intent(this, AddEventActivity.class);
+        startActivity(intent);
+    }
+    fab.setOnClickListener
 
    public void prepareDummyEventListData(){
 
