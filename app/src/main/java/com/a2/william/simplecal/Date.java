@@ -27,8 +27,14 @@ public class Date {
     public String getMonthString(){
         return cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault());
     }
+    public String getShortMonthString(){
+        return cal.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.getDefault());
+    }
     public String getDayOfWeekString(){
         return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault());
+    }
+    public String getShortDayOfWeekString(){
+        return cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.getDefault());
     }
     public String getDayOfMonthString(){
         return String.valueOf(cal.get(Calendar.DAY_OF_MONTH));
@@ -50,6 +56,14 @@ public class Date {
     }
     public void addDateEvent(String eventName, String startTime){
         dateEventList.add(new DateEvent(eventName, startTime));
+    }
+    @Override
+    public String toString(){
+        if(!getRealDate()){
+            return ""+getShortMonthString()+" "+getYearString()+"";
+        }else {
+            return "" + getShortDayOfWeekString() + " " + getDayOfMonthString() + " " + getShortMonthString() + ". " + getYearString() + "";
+        }
     }
 }
 

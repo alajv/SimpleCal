@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
     }
-    fab.setOnClickListener
+
 
    public void prepareDummyEventListData(){
 
