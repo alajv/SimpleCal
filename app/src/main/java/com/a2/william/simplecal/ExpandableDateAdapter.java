@@ -109,7 +109,7 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
             TextView dayOfWeekTextView = (TextView) convertView.findViewById(R.id.day_of_week);
             dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
             dayOfMonthTextView.setText(date.getDayOfMonthString());
-            dayOfWeekTextView.setText(date.getDayOfWeekString());
+            dayOfWeekTextView.setText(date.getShortDayOfWeekString());
 
             return convertView;
 
