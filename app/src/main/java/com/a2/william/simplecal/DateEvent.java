@@ -8,11 +8,13 @@ public class DateEvent {
 
     private String eventName;
     private String startTime;
+    private String endTime;
 
-    public DateEvent(String eventName, String startTime){
+    public DateEvent(String eventName, String startTime, String endTime){
 
         this.eventName = eventName;
         this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public String getEventName(){
@@ -21,4 +23,5 @@ public class DateEvent {
     public String getStartTime(){
         return startTime;
     }
+    public String getEndTime(){return endTime;}
 }

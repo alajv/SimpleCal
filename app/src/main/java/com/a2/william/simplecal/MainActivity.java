@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
@@ -52,6 +53,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d(TAG, "onResume: I resumed");
+        
+        adapter.notifyDataSetChanged();
+        expListView.setAdapter(adapter);
+    }
+
     public void addEvent(View view){
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
@@ -60,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
    public void prepareDummyEventListData(){
 
-        dateStore.getList().get(1).addDateEvent("Spela pingis","21.00" );
-        dateStore.getList().get(1).addDateEvent("Bowling", "06.15");
-        dateStore.getList().get(5).addDateEvent("Quiz på GG Bar", "19.00");
+        dateStore.getList().get(1).addDateEvent("Spela pingis","21.00" , "23.10");
+        dateStore.getList().get(1).addDateEvent("Bowling", "06.15", "23.10");
+        dateStore.getList().get(5).addDateEvent("Quiz på GG Bar", "19.00", "23.40");
     }
 }

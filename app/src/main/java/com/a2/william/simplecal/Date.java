@@ -51,11 +51,12 @@ public class Date {
     public int getMonth(){
         return cal.get(Calendar.MONTH);
     }
+    public int getYear(){return cal.get(Calendar.YEAR);}
     public List getDateEventList(){
         return dateEventList;
     }
-    public void addDateEvent(String eventName, String startTime){
-        dateEventList.add(new DateEvent(eventName, startTime));
+    public void addDateEvent(String eventName, String startTime, String endTime){
+        dateEventList.add(new DateEvent(eventName, startTime, endTime));
     }
     @Override
     public String toString(){

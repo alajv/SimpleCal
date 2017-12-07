@@ -49,10 +49,12 @@ public class ExpandableDateAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.date_event_layout, null);
         }
         TextView addStartHour = (TextView) convertView.findViewById(R.id.startTimeTextView);
+        TextView endTime = convertView.findViewById(R.id.endTimeTextView);
         TextView addEventName = (TextView) convertView.findViewById(R.id.eventName);
 
         addStartHour.setText(dateEvent.getStartTime());
         addEventName.setText(dateEvent.getEventName());
+        endTime.setText(dateEvent.getEndTime());
 
         return convertView;
     }
