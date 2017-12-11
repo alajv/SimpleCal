@@ -33,6 +33,7 @@ public class AddEventActivity extends AppCompatActivity implements  View.OnClick
     Calendar cal;
     private int mHour, mMinute;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

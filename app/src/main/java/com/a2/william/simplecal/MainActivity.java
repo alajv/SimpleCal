@@ -59,14 +59,12 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onResume: I resumed");
         
         adapter.notifyDataSetChanged();
-        expListView.setAdapter(adapter);
     }
 
     public void addEvent(View view){
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
     }
-
 
    public void prepareDummyEventListData(){
 

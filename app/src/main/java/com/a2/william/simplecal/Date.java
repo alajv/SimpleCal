@@ -12,9 +12,8 @@ import java.util.List;
 
 public class Date {
 
-    Calendar cal = Calendar.getInstance();
-    List dateEventList;
-
+    private Calendar cal = Calendar.getInstance();
+    private List dateEventList;
     private boolean realDate;
 
     public Date( int year, int month, int dayOfMonth, boolean realDate){
