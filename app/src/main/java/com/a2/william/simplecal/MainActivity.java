@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,19 +21,26 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListView expListView;
     FloatingActionButton fab;
     DateStore dateStore = DateStoreFactory.dateStore();
+    AppDatabase database;
+    List<DateEvent> databaseEventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        database = AppDatabase.getDatabase(getApplicationContext());
+
+        database.dateEventDao().removeAllDateEvents();
+
+
 
         expListView = findViewById(R.id.dateList);
         fab = findViewById(R.id.fab);
 
-        prepareDummyEventListData();
         adapter = new ExpandableDateAdapter(this, dateStore.getList());
 
         expListView.setAdapter(adapter);
+
 
         expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -56,9 +66,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        getListFromDatabase();
         Log.d(TAG, "onResume: I resumed");
-        
-        adapter.notifyDataSetChanged();
     }
 
     public void addEvent(View view){
@@ -66,10 +75,17 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-   public void prepareDummyEventListData(){
+   private void getListFromDatabase(){
 
-        dateStore.getList().get(1).addDateEvent("Spela pingis","21.00" , "23.10");
-        dateStore.getList().get(1).addDateEvent("Bowling", "06.15", "23.10");
-        dateStore.getList().get(5).addDateEvent("Quiz på GG Bar", "19.00", "23.40");
+       for (int i = 0; i < dateStore.getList().size(); i++) {
+           dateStore.getList().get(i).getDateEventList().clear();
+           databaseEventList = database.dateEventDao().getEventsWhere(dateStore.getList().get(i).getYear(), dateStore.getList().get(i).getMonth(), dateStore.getList().get(i).getDayOfMonth());
+           if (databaseEventList.size() > 0) {
+               for (int j = 0; j < databaseEventList.size(); j++) {
+                   dateStore.getList().get(i).addDateEvent(databaseEventList.get(j).getYear(), databaseEventList.get(j).getMonth(), databaseEventList.get(j).getDayOfMonth(), databaseEventList.get(j).getEventName(), databaseEventList.get(j).getStartTime(), databaseEventList.get(j).getEndTime());
+               }
+               databaseEventList.clear();
+           }
+       }
     }
 }

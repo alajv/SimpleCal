@@ -54,8 +54,8 @@ public class Date {
     public List getDateEventList(){
         return dateEventList;
     }
-    public void addDateEvent(String eventName, String startTime, String endTime){
-        dateEventList.add(new DateEvent(eventName, startTime, endTime));
+    public void addDateEvent(int year, int month, int dayOfMonth, String eventName, String startTime, String endTime){
+        dateEventList.add(new DateEvent( year, month, dayOfMonth, eventName, startTime, endTime));
     }
     @Override
     public String toString(){

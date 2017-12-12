@@ -26,8 +26,8 @@ import java.util.List;
 public class AddEventActivity extends AppCompatActivity implements  View.OnClickListener{
     private static final String TAG = "AddEventActivity";
 
-    DateStore dateStore = DateStoreFactory.dateStore();
-    EditText startTimeEditText, endTimeEditText;
+    private AppDatabase database;
+    EditText startTimeEditText, endTimeEditText, eventNameEditText;
     Button addEventButton;
     DatePicker eventDatePicker;
     Calendar cal;
@@ -38,11 +38,13 @@ public class AddEventActivity extends AppCompatActivity implements  View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event_activity);
+        database = AppDatabase.getDatabase(getApplicationContext());
 
         startTimeEditText = findViewById(R.id.startTimeEditText);
         endTimeEditText = findViewById(R.id.endTimeEditText);
         eventDatePicker = findViewById(R.id.addEventDatePicker);
         addEventButton = findViewById(R.id.addEventButton);
+        eventNameEditText = findViewById(R.id.eventNameEditText);
 
         startTimeEditText.setOnClickListener(this);
         endTimeEditText.setOnClickListener(this);
@@ -82,16 +84,12 @@ public class AddEventActivity extends AppCompatActivity implements  View.OnClick
                     int day=eventDatePicker.getDayOfMonth();
                     int year=eventDatePicker.getYear();
                     int month=eventDatePicker.getMonth();
+                    String startTime=startTimeEditText.getText().toString();
+                    String endTime=endTimeEditText.getText().toString();
+                    String eventName=eventNameEditText.getText().toString();
 
-                    for(int i = 0; i<dateStore.getList().size(); i++){
-                        if(day==dateStore.getList().get(i).getDayOfMonth() && month==dateStore.getList().get(i).getMonth() && year==dateStore.getList().get(i).getYear()){
-
-                            dateStore.getList().get(i).addDateEvent("Spela mambo", startTimeEditText.getText().toString(), endTimeEditText.getText().toString());
-                            Log.d(TAG, "onClick: Event was added ");
-                            finish();
-                        }
-                    }
-
+                    database.dateEventDao().addDateEvent(new DateEvent(year, month, day, eventName, startTime, endTime));
+                    finish();
                 }
             };
 
