@@ -1,6 +1,7 @@
 package com.a2.william.simplecal;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,7 +90,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     public int getGroupType(int groupPosition) {
         day = (Day) getGroup(groupPosition);
 
-        if (day.isRealDay() == false) {
+        if (!day.isRealDay()) {
             return 0;
         } else {
             return 1;
@@ -111,11 +112,12 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                     LayoutInflater inflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     convertView = inflater.inflate(R.layout.day_list_group, null);
                 }
-                TextView dayOfMonthTextView = (TextView) convertView.findViewById(R.id.day_of_month);
-                TextView dayOfWeekTextView = (TextView) convertView.findViewById(R.id.day_of_week);
+                TextView dayOfMonthTextView = convertView.findViewById(R.id.day_of_month);
+                TextView dayOfWeekTextView = convertView.findViewById(R.id.day_of_week);
                 dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
                 dayOfMonthTextView.setText(day.getDayOfMonthString());
                 dayOfWeekTextView.setText(day.getShortDayOfWeekString());
+                convertView.setBackgroundColor(Color.parseColor("#BBDEFB"));
 
                 return convertView;
 

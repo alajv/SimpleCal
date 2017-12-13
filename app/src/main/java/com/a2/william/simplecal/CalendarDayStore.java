@@ -12,7 +12,7 @@ public class CalendarDayStore implements DayStore {
     private static final String TAG = "CalendarDayStore";
     private LinkedList<Day> calendarDayList;
 
-    private CalendarDayStore() {
+    public CalendarDayStore() {
         calendarDayList = new LinkedList<>();
         fillList();
     }
