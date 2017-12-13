@@ -9,25 +9,26 @@ import android.content.Context;
  * Created by William on 2017-12-12.
  */
 
-@Database(entities={DateEvent.class}, version = 16, exportSchema = false)
+@Database(entities = {DayEvent.class}, version = 16, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase INSTANCE;
 
-    public abstract DateEventDao dateEventDao();
+    public abstract DayEventDao dayEventDao();
 
-    public static AppDatabase getDatabase(Context context){
-        if(INSTANCE == null){
+    public static AppDatabase getDatabase(Context context) {
+        if (INSTANCE == null) {
             INSTANCE =
-                    Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
-                            //Room.databaseBuilder(context, AppDatabase.class, "eventdatabase")
+                    //Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
+                            Room.databaseBuilder(context, AppDatabase.class, "eventdatabase")
                             .allowMainThreadQueries()
                             .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCE;
     }
-    public static void destroyInstance(){
+
+    public static void destroyInstance() {
         INSTANCE = null;
     }
 }

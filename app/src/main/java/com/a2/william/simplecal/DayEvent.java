@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey;
  */
 
 @Entity
-public class DateEvent {
+public class DayEvent {
 
     @PrimaryKey(autoGenerate = true)
     int id;
@@ -19,7 +19,7 @@ public class DateEvent {
     private String startTime;
     private String endTime;
 
-    public DateEvent(int year, int month, int dayOfMonth, String eventName, String startTime, String endTime){
+    public DayEvent(int year, int month, int dayOfMonth, String eventName, String startTime, String endTime) {
 
         this.year = year;
         this.month = month;
@@ -29,14 +29,27 @@ public class DateEvent {
         this.endTime = endTime;
     }
 
-    public int getYear(){return year;}
-    public int getMonth(){return month;}
-    public int getDayOfMonth(){return dayOfMonth;}
-    public String getEventName(){
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+
+    public String getEventName() {
         return eventName;
     }
-    public String getStartTime(){
+
+    public String getStartTime() {
         return startTime;
     }
-    public String getEndTime(){return endTime;}
+
+    public String getEndTime() {
+        return endTime;
+    }
 }

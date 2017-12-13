@@ -14,34 +14,33 @@ import java.util.ArrayList;
  * Created by William on 2017-11-15.
  */
 
-public class TestDateAdapter extends ArrayAdapter<Date>{
+public class TestDateAdapter extends ArrayAdapter<Day> {
 
     private static final String TAG = "TestDateAdapter";
 
-    public TestDateAdapter(Context context, ArrayList<Date> date){
-        super(context, 0, date);
+    public TestDateAdapter(Context context, ArrayList<Day> day) {
+        super(context, 0, day);
     }
 
-    Date date;
+    Day day;
 
     @Override
-    public int getItemViewType(int position){
-        Log.d(TAG, "getItemViewType: "+position);
+    public int getItemViewType(int position) {
+        Log.d(TAG, "getItemViewType: " + position);
 
-        date = getItem(position);
+        day = getItem(position);
 
-        if(position==0||date.getDayOfMonth()==0){
+        if (position == 0 || day.getDayOfMonth() == 0) {
             return 0;
-        }else{
+        } else {
             return 1;
         }
     }
 
     @Override
-    public int getViewTypeCount(){
+    public int getViewTypeCount() {
         return 2;
     }
-
 
 
     @Override
@@ -49,10 +48,11 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
 
         int type = getItemViewType(position);
 
-        switch (type){
-            case 0: Log.d(TAG, "getView: case 0");
+        switch (type) {
+            case 0:
+                Log.d(TAG, "getView: case 0");
 
-                ViewHolderMonth  viewHolderMonth;
+                ViewHolderMonth viewHolderMonth;
                 if (convertView == null) {
 
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.month_list_item, parent, false);
@@ -65,20 +65,21 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
                 } else {
                     viewHolderMonth = (ViewHolderMonth) convertView.getTag();
                 }
-                date = getItem(position);
+                day = getItem(position);
 
-                if (date != null) {
-                    viewHolderMonth.monthHeaderTextView.setText(date.getMonthString());
-                    viewHolderMonth.yearHeaderTextView.setText(date.getYearString());
+                if (day != null) {
+                    viewHolderMonth.monthHeaderTextView.setText(day.getMonthString());
+                    viewHolderMonth.yearHeaderTextView.setText(day.getYearString());
                 }
                 return convertView;
 
-            case 1: Log.d(TAG, "getView: Case 1");
+            case 1:
+                Log.d(TAG, "getView: Case 1");
 
                 ViewHolderDay viewHolderDay;
                 if (convertView == null) {
 
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.date_list_item, parent, false);
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.day_list_item, parent, false);
                     viewHolderDay = new ViewHolderDay();
                     viewHolderDay.dayTextView = (TextView) convertView.findViewById(R.id.day_of_month);
                     viewHolderDay.monthTextView = (TextView) convertView.findViewById(R.id.day_of_week);
@@ -88,25 +89,27 @@ public class TestDateAdapter extends ArrayAdapter<Date>{
                 } else {
                     viewHolderDay = (ViewHolderDay) convertView.getTag();
                 }
-                date = getItem(position);
-                if (date != null) {
-                    viewHolderDay.dayTextView.setText(date.getDayOfWeekString());
-                    viewHolderDay.monthTextView.setText(date.getMonthString());
+                day = getItem(position);
+                if (day != null) {
+                    viewHolderDay.dayTextView.setText(day.getDayOfWeekString());
+                    viewHolderDay.monthTextView.setText(day.getMonthString());
                 }
                 return convertView;
 
-            default: Log.d(TAG, "getView: default");
+            default:
+                Log.d(TAG, "getView: default");
 
                 break;
         }
         return convertView;
     }
 
-    static class ViewHolderDay{
+    static class ViewHolderDay {
         TextView dayTextView;
         TextView monthTextView;
     }
-    static class ViewHolderMonth{
+
+    static class ViewHolderMonth {
         TextView monthHeaderTextView;
         TextView yearHeaderTextView;
     }
