@@ -101,8 +101,9 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Log.d(TAG, "getGroupView: I go here");
 
-        day = (Day) getGroup(groupPosition);
+        //day = (Day) getGroup(groupPosition);
         int type = getGroupType(groupPosition);
+
 
         switch (type) {
             case 1:
@@ -117,8 +118,48 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
                 dayOfMonthTextView.setText(day.getDayOfMonthString());
                 dayOfWeekTextView.setText(day.getShortDayOfWeekString());
-                convertView.setBackgroundColor(Color.parseColor("#BBDEFB"));
 
+                int color = getColor(groupPosition);
+                switch (color) {
+                    case 0:
+                        convertView.setBackgroundColor(Color.parseColor("#B2EBF2"));
+                        return convertView;
+                    case 1:
+                        convertView.setBackgroundColor(Color.parseColor("#B2DFDB"));
+                        return convertView;
+                    case 2:
+                        convertView.setBackgroundColor(Color.parseColor("#C8E6C9"));
+                        return convertView;
+                    case 3:
+                        convertView.setBackgroundColor(Color.parseColor("#DCEDC8"));
+                        return convertView;
+                    case 4:
+                        convertView.setBackgroundColor(Color.parseColor("#F0F4C3"));
+                        return convertView;
+                    case 5:
+                        convertView.setBackgroundColor(Color.parseColor("#FFF9C4"));
+                        return convertView;
+                    case 6:
+                        convertView.setBackgroundColor(Color.parseColor("#FFECB3"));
+                        return convertView;
+                    case 7:
+                        convertView.setBackgroundColor(Color.parseColor("#FFE0B2"));
+                        return convertView;
+                    case 8:
+                        convertView.setBackgroundColor(Color.parseColor("#FFCCBC"));
+                        return convertView;
+                    case 9:
+                        convertView.setBackgroundColor(Color.parseColor("#D7CCC8"));
+                        return convertView;
+                    case 10:
+                        convertView.setBackgroundColor(Color.parseColor("#F5F5F5"));
+                        return convertView;
+                    case 11:
+                        convertView.setBackgroundColor(Color.parseColor("#CFD8DC"));
+                        return convertView;
+                    default:
+                        break;
+                }
                 return convertView;
 
             case 0:
@@ -150,5 +191,11 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public int getColor(int groupPosition) {
+        day = (Day) getGroup(groupPosition);
+
+        return day.getMonth();
     }
 }

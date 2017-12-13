@@ -1,6 +1,7 @@
 package com.a2.william.simplecal;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 dayStore.getList().get(0).getDayOfMonth());
 
         fab = findViewById(R.id.fab);
+
         adapter = new ExpandableDayAdapter(this, dayStore.getList());
         expListView = findViewById(R.id.dateList);
         expListView.setAdapter(adapter);
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 getSupportActionBar().setTitle(dayStore.getList().get(firstVisibleItem).getMonthString());
+
             }
         });
     }
