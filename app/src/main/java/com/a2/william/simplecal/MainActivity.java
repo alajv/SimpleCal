@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Visibility;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     int lastExpandedPosition = -1;
+    View lastDeleteLayoutShown;
     ExpandableDayAdapter adapter;
     ExpandableListView expListView;
     FloatingActionButton fab;
@@ -62,6 +65,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+       /*expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
+                Log.d(TAG, "onChildClick: Körs");
+                if (lastDeleteLayoutShown == null){
+                    lastDeleteLayoutShown = view.findViewById(R.id.deleteLayout);
+                }
+
+
+                if(view.findViewById(R.id.deleteLayout).getVisibility() == View.VISIBLE){
+
+                    view.findViewById(R.id.deleteLayout).setVisibility(View.INVISIBLE);
+                }else{
+                    lastDeleteLayoutShown.setVisibility(View.INVISIBLE);
+                    view.findViewById(R.id.deleteLayout).setVisibility(View.VISIBLE);
+                }
+                lastDeleteLayoutShown = view.findViewById(R.id.deleteLayout);
+                view.setClickable(true);
+                lastDeleteLayoutShown.setClickable(true);
+
+                return true;
+            }
+        });*/
     }
 
     @Override

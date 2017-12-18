@@ -8,8 +8,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by William on 2017-12-04.
@@ -43,6 +43,8 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         addEventButton.setOnClickListener(this);
 
         cal = Calendar.getInstance();
+        startTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", Calendar.HOUR, Calendar.MINUTE));
+        endTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", Calendar.HOUR, Calendar.MINUTE));
         eventDatePicker.setMinDate(cal.getTimeInMillis());
         cal.add(Calendar.YEAR, 1);
         eventDatePicker.setMaxDate(cal.getTimeInMillis());
@@ -55,10 +57,10 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         mMinute = cal.get(Calendar.MINUTE);
 
         if (v == startTimeEditText) {
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this, 2, new TimePickerDialog.OnTimeSetListener() {
+            final TimePickerDialog timePickerDialog = new TimePickerDialog(this, 2, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    startTimeEditText.setText(String.format("%02d:%02d", hourOfDay, minute));
+                    startTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, true);
             timePickerDialog.show();
@@ -67,7 +69,7 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
             TimePickerDialog timePickerDialog = new TimePickerDialog(this, 2, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    endTimeEditText.setText(String.format("%02d:%02d", hourOfDay, minute));
+                    endTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", hourOfDay, minute));
                 }
             }, mHour, mMinute, true);
             timePickerDialog.show();

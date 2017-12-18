@@ -3,11 +3,14 @@ package com.a2.william.simplecal;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -53,6 +56,23 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         TextView addStartHour = convertView.findViewById(R.id.startTimeTextView);
         TextView endTime = convertView.findViewById(R.id.endTimeTextView);
         TextView addEventName = convertView.findViewById(R.id.eventName);
+        final FrameLayout deleteLayout = convertView.findViewById(R.id.deleteLayout);
+        deleteLayout.setVisibility(View.INVISIBLE);
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: I hear u m8");
+
+                if(deleteLayout.getVisibility() == View.INVISIBLE){
+                    deleteLayout.setVisibility(View.VISIBLE);
+                }else{
+                    deleteLayout.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
+
 
         addStartHour.setText(dayEvent.getStartTime());
         addEventName.setText(dayEvent.getEventName());

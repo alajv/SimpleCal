@@ -44,7 +44,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:background="@android:color/transparent"/>
 
         <TextView
             android:id="@+id/textView3"
@@ -59,7 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:focusable="false"/>
+            android:focusable="false"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 
