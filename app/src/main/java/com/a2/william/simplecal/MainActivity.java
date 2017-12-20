@@ -1,8 +1,11 @@
 package com.a2.william.simplecal;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Visibility;
@@ -11,21 +14,25 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    final Context context = this;
 
     int lastExpandedPosition = -1;
-    View lastDeleteLayoutShown;
     ExpandableDayAdapter adapter;
     ExpandableListView expListView;
     FloatingActionButton fab;
     DayStore dayStore = DayStoreFactory.dayStore();
-    AppDatabase database;
+    static AppDatabase database;
     List<DayEvent> databaseEventList;
+    Calendar cal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,30 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-       /*expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long l) {
-                Log.d(TAG, "onChildClick: Körs");
-                if (lastDeleteLayoutShown == null){
-                    lastDeleteLayoutShown = view.findViewById(R.id.deleteLayout);
-                }
-
-
-                if(view.findViewById(R.id.deleteLayout).getVisibility() == View.VISIBLE){
-
-                    view.findViewById(R.id.deleteLayout).setVisibility(View.INVISIBLE);
-                }else{
-                    lastDeleteLayoutShown.setVisibility(View.INVISIBLE);
-                    view.findViewById(R.id.deleteLayout).setVisibility(View.VISIBLE);
-                }
-                lastDeleteLayoutShown = view.findViewById(R.id.deleteLayout);
-                view.setClickable(true);
-                lastDeleteLayoutShown.setClickable(true);
-
-                return true;
-            }
-        });*/
     }
 
     @Override
@@ -102,6 +85,39 @@ public class MainActivity extends AppCompatActivity {
     public void addEvent(View view) {
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
+    }
+
+    public void deleteDayEventFromDB(final int year, final int month, final int dayOfMonth, final String eventName) {
+        Log.d(TAG, "deleteDayEventFromDB: i try to delete dis ok");
+        cal = Calendar.getInstance();
+        cal.set(year, month, dayOfMonth);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setMessage("Do you want to remove the event '" + eventName + "' from " + cal.get(Calendar.DAY_OF_MONTH) +
+                " " + cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) +
+                " " + cal.get(Calendar.YEAR)+ ".")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        database.dayEventDao().deleteDayEvent(year, month, dayOfMonth, eventName);
+                        getListFromDatabase();
+                        adapter.notifyDataSetChanged();
+                        Toast.makeText(MainActivity.this, "Is deleted", Toast.LENGTH_LONG).show();
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
+       /* database.dayEventDao().deleteDayEvent(year, month, dayOfMonth, eventName);
+        getListFromDatabase();
+        adapter.notifyDataSetChanged();*/
     }
 
     private void getListFromDatabase() {

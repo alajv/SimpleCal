@@ -10,7 +10,9 @@
         android:id="@+id/dateList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:groupIndicator="@null"/>
+        android:groupIndicator="@null"
+        android:clickable="false"
+        android:focusable="false"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

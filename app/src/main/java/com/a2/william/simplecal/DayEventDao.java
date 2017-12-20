@@ -34,4 +34,8 @@ public interface DayEventDao {
     @Query("delete from dayevent where " +
             " year < :year and month < :month and dayOfMonth < :dayOfMonth")
     void removeExpiredEvents(int year, int month, int dayOfMonth);
+
+    @Query("delete from dayevent where " +
+            "year = :year and month = :month and dayOfMonth = :dayOfMonth and eventName = :eventName")
+    void deleteDayEvent(int year, int month, int dayOfMonth, String eventName);
 }

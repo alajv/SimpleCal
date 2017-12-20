@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -56,27 +58,38 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         TextView addStartHour = convertView.findViewById(R.id.startTimeTextView);
         TextView endTime = convertView.findViewById(R.id.endTimeTextView);
         TextView addEventName = convertView.findViewById(R.id.eventName);
-        final FrameLayout deleteLayout = convertView.findViewById(R.id.deleteLayout);
-        deleteLayout.setVisibility(View.INVISIBLE);
-
+        final ImageButton deleteButton = convertView.findViewById(R.id.deleteButton);
+        deleteButton.setVisibility(View.INVISIBLE);
+        deleteButton.setClickable(true);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: deletelayout onClick! i do");
+                if (_context instanceof MainActivity) {
+                    ((MainActivity) _context).deleteDayEventFromDB(dayEvent.getYear(),
+                            dayEvent.getMonth(),
+                            dayEvent.getDayOfMonth(),
+                            dayEvent.getEventName());
+                }
+            }
+        });
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: I hear u m8");
 
-                if(deleteLayout.getVisibility() == View.INVISIBLE){
-                    deleteLayout.setVisibility(View.VISIBLE);
-                }else{
-                    deleteLayout.setVisibility(View.INVISIBLE);
+                if (deleteButton.getVisibility() == View.INVISIBLE) {
+                    deleteButton.setVisibility(View.VISIBLE);
+                } else {
+                    deleteButton.setVisibility(View.INVISIBLE);
                 }
 
             }
         });
-
-
         addStartHour.setText(dayEvent.getStartTime());
         addEventName.setText(dayEvent.getEventName());
         endTime.setText(dayEvent.getEndTime());
+        convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
 
         return convertView;
     }
@@ -153,8 +166,8 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 TextView yearHeader = convertView.findViewById(R.id.yearHeader);
                 monthHeader.setText(day.getMonthString());
                 yearHeader.setText(day.getYearString());
-                convertView.setClickable(true);
-                convertView.setFocusable(false);
+                //convertView.setClickable(true);
+                //convertView.setFocusable(false);
                 return convertView;
             default:
                 Log.d(TAG, "getGroupView: Default, WTF....");
@@ -177,7 +190,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     public String getColor(int groupPosition) {
         day = (Day) getGroup(groupPosition);
 
-        switch(day.getMonth()){
+        switch (day.getMonth()) {
             case 0:
                 return "#B2EBF2";
             case 1:
@@ -204,7 +217,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 return "#CFD8DC";
             default:
                 return "";
-                //break;
+            //break;
         }
     }
 }
