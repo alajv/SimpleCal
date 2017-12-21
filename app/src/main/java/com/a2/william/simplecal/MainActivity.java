@@ -20,7 +20,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    final Context context = this;
+   // final Context context = this;
 
     int lastExpandedPosition = -1;
     ExpandableDayAdapter adapter;
@@ -50,11 +50,11 @@ public class MainActivity extends AppCompatActivity {
 
         /*
         When a group in expListView is expanded that groups groupPosition is saved in
-        lastExpandedPosition, when another group is expanded, lastExpandedPosition is
+        lastExpandedPosition, when another group then is expanded, lastExpandedPosition is
         collapsed.
         This listener is commented out for now, because you probably want to be able to
         see your schedule on more then one day at a time, and that makes this listener
-        stupid
+        stupid.
          */
        /* expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         cal = Calendar.getInstance();
         cal.set(year, month, dayOfMonth);
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setMessage("Do you want to remove the event '" + eventName + "' from " + cal.get(Calendar.DAY_OF_MONTH) +
                 " " + cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) +
                 " " + cal.get(Calendar.YEAR)+ ".")

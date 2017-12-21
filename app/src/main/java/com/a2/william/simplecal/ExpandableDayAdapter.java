@@ -131,11 +131,9 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Log.d(TAG, "getGroupView: I go here");
 
-        //_listDayHeader.get(groupPosition) = (Day) getGroup(groupPosition);
-        int type = getGroupType(groupPosition);
+        //int type = getGroupType(groupPosition);
 
-
-        switch (type) {
+        switch (getGroupType(groupPosition)) {
             case 1:
                 Log.d(TAG, "getGroupView: Case 1, Dagar");
 
@@ -149,7 +147,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 Supposed to set bold text on groups in listview who have events on them.
                 Commented out because it doenst work properly.
                 */
-                /*if(getChildrenCount(groupPosition)==0){
+                if(getChildrenCount(groupPosition)==0){
                     dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
                     dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
                 }else{
@@ -158,7 +156,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                     dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
                     dayOfWeekTextView.setTypeface(null, Typeface.BOLD);
                 }
-                */
+
                 dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
                 dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
 
