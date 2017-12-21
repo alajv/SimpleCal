@@ -28,7 +28,6 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
     private List<Day> _listDayHeader;
-    Day day;
 
     public ExpandableDayAdapter(Context context, List<Day> listDayHeader) {
         this._context = context;
@@ -121,9 +120,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupType(int groupPosition) {
-        day = (Day) getGroup(groupPosition);
-
-        if (!day.isRealDay()) {
+        if (!_listDayHeader.get(groupPosition).isRealDay()) {
             return 0;
         } else {
             return 1;
@@ -134,7 +131,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Log.d(TAG, "getGroupView: I go here");
 
-        //day = (Day) getGroup(groupPosition);
+        //_listDayHeader.get(groupPosition) = (Day) getGroup(groupPosition);
         int type = getGroupType(groupPosition);
 
 
@@ -148,9 +145,22 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 }
                 TextView dayOfMonthTextView = convertView.findViewById(R.id.day_of_month);
                 TextView dayOfWeekTextView = convertView.findViewById(R.id.day_of_week);
-                dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
-                dayOfMonthTextView.setText(day.getDayOfMonthString());
-                dayOfWeekTextView.setText(day.getShortDayOfWeekString());
+                /*
+                Supposed to set bold text on groups in listview who have events on them.
+                Commented out because it doenst work properly.
+                */
+                /*if(getChildrenCount(groupPosition)==0){
+                    dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
+                    dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
+                }else{
+                    dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
+                    dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
+                    dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
+                    dayOfWeekTextView.setTypeface(null, Typeface.BOLD);
+                }
+                */
+                dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
+                dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
 
                 convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
 
@@ -164,10 +174,13 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 }
                 TextView monthHeader = convertView.findViewById(R.id.monthHeader);
                 TextView yearHeader = convertView.findViewById(R.id.yearHeader);
-                monthHeader.setText(day.getMonthString());
-                yearHeader.setText(day.getYearString());
-                //convertView.setClickable(true);
-                //convertView.setFocusable(false);
+                monthHeader.setText(_listDayHeader.get(groupPosition).getMonthString());
+                yearHeader.setText(_listDayHeader.get(groupPosition).getYearString());
+                monthHeader.setTypeface(null, Typeface.BOLD);
+                yearHeader.setTypeface(null, Typeface.BOLD);
+
+                convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
+
                 return convertView;
             default:
                 Log.d(TAG, "getGroupView: Default, WTF....");
@@ -188,9 +201,8 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     }
 
     public String getColor(int groupPosition) {
-        day = (Day) getGroup(groupPosition);
 
-        switch (day.getMonth()) {
+        switch (_listDayHeader.get(groupPosition).getMonth()) {
             case 0:
                 return "#B2EBF2";
             case 1:
@@ -219,5 +231,16 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 return "";
             //break;
         }
+    }
+    private boolean hasChildren(int year, int month, int dayOfMonth){
+
+        for(int i = 0; i<_listDayHeader.size(); i++){
+            if(_listDayHeader.get(i).getYear()==year && _listDayHeader.get(i).getMonth()==month && _listDayHeader.get(i).getDayOfMonth()==dayOfMonth){
+                if(_listDayHeader.get(i).getDayEventList().size()>0){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

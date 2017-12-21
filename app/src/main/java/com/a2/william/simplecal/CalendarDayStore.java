@@ -37,7 +37,7 @@ public class CalendarDayStore implements DayStore {
         }
     }
 
-    public List<Day> getList() {
+    public List<Day> getListOfDays() {
         return calendarDayList;
     }
 }

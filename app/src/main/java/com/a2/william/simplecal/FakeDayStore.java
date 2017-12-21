@@ -37,7 +37,7 @@ public class FakeDayStore implements DayStore {
 
     }
 
-    public ArrayList<Day> getList() {
+    public ArrayList<Day> getListOfDays() {
         return dummyDay;
     }
 
