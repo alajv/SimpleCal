@@ -120,7 +120,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupType(int groupPosition) {
-        if (!_listDayHeader.get(groupPosition).isRealDay()) {
+        if (_listDayHeader.get(groupPosition).isRealDay()) {
             return 0;
         } else {
             return 1;
@@ -131,11 +131,9 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         Log.d(TAG, "getGroupView: I go here");
 
-        //int type = getGroupType(groupPosition);
-
         switch (getGroupType(groupPosition)) {
-            case 1:
-                Log.d(TAG, "getGroupView: Case 1, Day");
+            default:
+                Log.d(TAG, "getGroupView: default, Day");
 
                 if (convertView == null) {
                     LayoutInflater inflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -165,8 +163,8 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
 
                 return convertView;
 
-            case 0:
-                Log.d(TAG, "getGroupView: case 0, Headers");
+            case 1:
+                Log.d(TAG, "getGroupView: case 1, Headers");
                 if (convertView == null) {
                     LayoutInflater inflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     convertView = inflater.inflate(R.layout.month_list_item, null);
@@ -181,12 +179,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
 
                 return convertView;
-            default:
-                Log.d(TAG, "getGroupView: Default, WTF....");
-                break;
         }
-        return convertView;
-
     }
 
     @Override
@@ -199,6 +192,10 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    /*
+    Returns hex color code for layout item based on what
+    month the item is associated with.
+     */
     public String getColor(int groupPosition) {
 
         switch (_listDayHeader.get(groupPosition).getMonth()) {
@@ -228,7 +225,6 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 return "#CFD8DC";
             default:
                 return "";
-            //break;
         }
     }
     private boolean hasChildren(int year, int month, int dayOfMonth){

@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
    // final Context context = this;
 
-    int lastExpandedPosition = -1;
+    //int lastExpandedPosition = -1;
     ExpandableDayAdapter adapter;
     ExpandableListView expListView;
     FloatingActionButton fab;
