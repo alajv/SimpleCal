@@ -17,8 +17,15 @@ public class CalendarDayStore implements DayStore {
         fillList();
     }
 
+    /*
+    Fills calendarDayList with 365 days, starting from this day.
+    If the month of the Day that is about to be added to the list
+    is not equal to the month of the last added day, two day objects
+    will be added to the list. One with realDay: false, and one
+    with realDay: true. The one with realDay: false will be shown as
+    month and year header in the listView.
+     */
     private void fillList() {
-
         Calendar cal = Calendar.getInstance();
 
         for (int i = 0; i < 365; i++) {

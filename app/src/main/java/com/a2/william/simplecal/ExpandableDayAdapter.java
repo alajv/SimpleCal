@@ -75,11 +75,11 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: I hear u m8");
-
                 if (deleteButton.getVisibility() == View.INVISIBLE) {
+                    Log.d(TAG, "onClick: Now you see me");
                     deleteButton.setVisibility(View.VISIBLE);
                 } else {
+                    Log.d(TAG, "onClick: Now you dont");
                     deleteButton.setVisibility(View.INVISIBLE);
                 }
 
@@ -135,7 +135,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
 
         switch (getGroupType(groupPosition)) {
             case 1:
-                Log.d(TAG, "getGroupView: Case 1, Dagar");
+                Log.d(TAG, "getGroupView: Case 1, Day");
 
                 if (convertView == null) {
                     LayoutInflater inflater = (LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -144,8 +144,9 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 TextView dayOfMonthTextView = convertView.findViewById(R.id.day_of_month);
                 TextView dayOfWeekTextView = convertView.findViewById(R.id.day_of_week);
                 /*
-                Supposed to set bold text on groups in listview who have events on them.
-                Commented out because it doenst work properly.
+                Supposed to set bold text on groups in listview that have events in their dayEventList.
+                Commented out because it doenst work properly. Some items that should have getChildrenCount = 0
+                also show as bold after i add a DayEvent to a Day.
                 */
                 if(getChildrenCount(groupPosition)==0){
                     dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
