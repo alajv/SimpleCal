@@ -1,6 +1,5 @@
 package com.a2.william.simplecal;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -20,14 +19,11 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-   // final Context context = this;
-
-    //int lastExpandedPosition = -1;
     ExpandableDayAdapter adapter;
     ExpandableListView expListView;
     FloatingActionButton fab;
     DayStore dayStore = DayStoreFactory.dayStore();
-    static AppDatabase database;
+    AppDatabase database;
     List<DayEvent> tempDayEventList;
     Calendar cal;
 
@@ -76,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                getSupportActionBar().setTitle(dayStore.getListOfDays().get(firstVisibleItem).getMonthString()+" "+dayStore.getListOfDays().get(firstVisibleItem).getYearString());
+                getSupportActionBar().setTitle(dayStore.getListOfDays().get(firstVisibleItem).getMonthString() + " " + dayStore.getListOfDays().get(firstVisibleItem).getYearString());
             }
         });
     }
@@ -93,23 +89,24 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddEventActivity.class);
         startActivity(intent);
     }
+
     /*
     Deletes dayEvent from DB. Also creates a AlertDialog to confirm or deny the deletion.
      */
-    public void deleteDayEventFromDB(final int year, final int month, final int dayOfMonth, final String eventName) {
+    public void deleteDayEventFromDB(final int year, final int month, final int dayOfMonth, final String eventName, final int id) {
         Log.d(TAG, "deleteDayEventFromDB: i try to delete dis ok");
         cal = Calendar.getInstance();
         cal.set(year, month, dayOfMonth);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Do you want to remove the event '" + eventName + "' from " + cal.get(Calendar.DAY_OF_MONTH) +
+        alertDialogBuilder.setMessage("Do you want to remove the event " + eventName + "' from " + cal.get(Calendar.DAY_OF_MONTH) +
                 " " + cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) +
-                " " + cal.get(Calendar.YEAR)+ ".")
+                " " + cal.get(Calendar.YEAR) + ".")
                 .setCancelable(false)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
-                        database.dayEventDao().deleteDayEvent(year, month, dayOfMonth, eventName);
+                        database.dayEventDao().deleteDayEvent(year, month, dayOfMonth, eventName, id);
                         fillDayEventList();
                         adapter.notifyDataSetChanged();
                         Toast.makeText(MainActivity.this, "Removed", Toast.LENGTH_LONG).show();
@@ -124,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
+
     /*
     Fills a Day's dayEventList with dayEvents from DB
      */
@@ -142,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
                                 tempDayEventList.get(j).getDayOfMonth(),
                                 tempDayEventList.get(j).getEventName(),
                                 tempDayEventList.get(j).getStartTime(),
-                                tempDayEventList.get(j).getEndTime());
+                                tempDayEventList.get(j).getEndTime(),
+                                tempDayEventList.get(j).idPlease());
                     }
                 }
                 tempDayEventList.clear();

@@ -14,6 +14,12 @@ public class Day {
 
     private Calendar cal = Calendar.getInstance();
     private List dayEventList;
+    /*
+    realDay is used to determine if the Day should be shown as
+    a Day or a Month in the list view. The first Day in a month
+    is created two times, once with realDay=false, and another
+    time with realDay=true.
+     */
     private boolean realDay;
 
     public Day(int year, int month, int dayOfMonth, boolean realDay) {
@@ -67,18 +73,20 @@ public class Day {
         return dayEventList;
     }
 
-    public void addDayEvent(int year, int month, int dayOfMonth, String eventName, String startTime, String endTime) {
-        dayEventList.add(new DayEvent(year, month, dayOfMonth, eventName, startTime, endTime));
+
+    public void addDayEvent(int year, int month, int dayOfMonth, String eventName, String startTime, String endTime, int id) {
+        dayEventList.add(new DayEvent(year, month, dayOfMonth, eventName, startTime, endTime, id));
     }
 
-    @Override
+
+   /* @Override
     public String toString() {
         if (!isRealDay()) {
             return "" + getShortMonthString() + " " + getYearString() + "";
         } else {
             return "" + getShortDayOfWeekString() + " " + getDayOfMonthString() + " " + getShortMonthString() + ". " + getYearString() + "";
         }
-    }
+    }*/
 }
 
 

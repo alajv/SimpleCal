@@ -20,24 +20,21 @@ import java.util.Locale;
 public class AddEventActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "AddEventActivity";
 
-    private AppDatabase database;
+    AppDatabase database;
     EditText startTimeEditText, endTimeEditText, eventNameEditText;
     Button addEventButton;
     DatePicker eventDatePicker;
     Calendar cal;
     TimePickerDialog endTimePickerDialog;
-    int startPickerHour;
-    int startPickerMinute;
-    int endPickerHour;
-    int endPickerMinute;
+    private int startPickerHour, startPickerMinute, endPickerHour, endPickerMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event_activity);
         database = AppDatabase.getDatabase(getApplicationContext());
-
         getSupportActionBar().setTitle("Add Event");
+
         startTimeEditText = findViewById(R.id.startTimeEditText);
         endTimeEditText = findViewById(R.id.endTimeEditText);
         eventDatePicker = findViewById(R.id.addEventDatePicker);
@@ -54,8 +51,8 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         endPickerHour = cal.get(Calendar.HOUR_OF_DAY);
         endPickerMinute = cal.get(Calendar.MINUTE);
 
-        startTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE)));
-        endTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE)));
+        startTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE)));
+        endTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE)));
         eventNameEditText.setText("");
         eventDatePicker.setMinDate(cal.getTimeInMillis());
         cal.add(Calendar.YEAR, 1);
@@ -65,12 +62,12 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v == startTimeEditText) {
-             TimePickerDialog startTimePickerDialog = new TimePickerDialog(this, 2, new TimePickerDialog.OnTimeSetListener() {
+            TimePickerDialog startTimePickerDialog = new TimePickerDialog(this, 2, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    startTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", hourOfDay, minute));
-                    startPickerHour=hourOfDay;
-                    startPickerMinute=minute;
+                    startTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                    startPickerHour = hourOfDay;
+                    startPickerMinute = minute;
                     timePickerCheck();
                 }
             }, startPickerHour, startPickerMinute, true);
@@ -80,18 +77,18 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
             endTimePickerDialog = new TimePickerDialog(this, 2, new TimePickerDialog.OnTimeSetListener() {
                 @Override
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                    endTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", hourOfDay, minute));
-                    endPickerHour=hourOfDay;
-                    endPickerMinute=minute;
+                    endTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                    endPickerHour = hourOfDay;
+                    endPickerMinute = minute;
                     timePickerCheck();
                 }
             }, endPickerHour, endPickerMinute, true);
             endTimePickerDialog.show();
 
         } else if (v == addEventButton) {
-            if(eventNameEditText.getText().toString().matches("")){
+            if (eventNameEditText.getText().toString().matches("")) {
                 Toast.makeText(AddEventActivity.this, "Name the event", Toast.LENGTH_LONG).show();
-            }else {
+            } else {
                 int day = eventDatePicker.getDayOfMonth();
                 int year = eventDatePicker.getYear();
                 int month = eventDatePicker.getMonth();
@@ -103,21 +100,27 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
                 finish();
             }
         }
-    };
+    }
 
-    public void timePickerCheck(){
+    ;
 
-        if(endPickerHour<startPickerHour && endPickerMinute>=startPickerMinute){
-            endPickerHour=startPickerHour;
-            endTimeEditText.setText(String.format(Locale.getDefault(),"%02d:%02d", endPickerHour, endPickerMinute));
-            Toast.makeText(AddEventActivity.this, "Event must start before it ends", Toast.LENGTH_LONG).show();
-        }else if(endPickerHour>=startPickerHour && endPickerMinute<startPickerMinute){
-            endPickerMinute=startPickerMinute;
+    /*
+    Checks start and end time of event. If event end time is
+    earlier than start time timePickerCheck sets end time equal
+    to or greater than start time.
+     */
+    public void timePickerCheck() {
+        if (endPickerHour < startPickerHour && endPickerMinute >= startPickerMinute) {
+            endPickerHour = startPickerHour;
             endTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", endPickerHour, endPickerMinute));
             Toast.makeText(AddEventActivity.this, "Event must start before it ends", Toast.LENGTH_LONG).show();
-        }else if(endPickerHour<startPickerHour && endPickerMinute<startPickerMinute){
-            endPickerHour=startPickerHour;
-            endPickerMinute=startPickerMinute;
+        } else if (endPickerHour >= startPickerHour && endPickerMinute < startPickerMinute) {
+            endPickerMinute = startPickerMinute;
+            endTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", endPickerHour, endPickerMinute));
+            Toast.makeText(AddEventActivity.this, "Event must start before it ends", Toast.LENGTH_LONG).show();
+        } else if (endPickerHour < startPickerHour && endPickerMinute < startPickerMinute) {
+            endPickerHour = startPickerHour;
+            endPickerMinute = startPickerMinute;
             endTimeEditText.setText(String.format(Locale.getDefault(), "%02d:%02d", endPickerHour, endPickerMinute));
             Toast.makeText(AddEventActivity.this, "Event must start before it ends", Toast.LENGTH_LONG).show();
         }

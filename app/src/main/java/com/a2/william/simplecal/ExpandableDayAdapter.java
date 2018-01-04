@@ -3,15 +3,11 @@ package com.a2.william.simplecal;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.support.constraint.ConstraintLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -68,7 +64,8 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                     ((MainActivity) _context).deleteDayEventFromDB(dayEvent.getYear(),
                             dayEvent.getMonth(),
                             dayEvent.getDayOfMonth(),
-                            dayEvent.getEventName());
+                            dayEvent.getEventName(),
+                            dayEvent.idPlease());
                 }
             }
         });
@@ -82,7 +79,6 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                     Log.d(TAG, "onClick: Now you dont");
                     deleteButton.setVisibility(View.INVISIBLE);
                 }
-
             }
         });
         addStartHour.setText(dayEvent.getStartTime());
@@ -146,10 +142,10 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 Commented out because it doenst work properly. Some items that should have getChildrenCount = 0
                 also show as bold after i add a DayEvent to a Day.
                 */
-                if(getChildrenCount(groupPosition)==0){
+                if (getChildrenCount(groupPosition) == 0) {
                     dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
                     dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
-                }else{
+                } else {
                     dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
                     dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
                     dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
@@ -227,11 +223,12 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 return "";
         }
     }
-    private boolean hasChildren(int year, int month, int dayOfMonth){
 
-        for(int i = 0; i<_listDayHeader.size(); i++){
-            if(_listDayHeader.get(i).getYear()==year && _listDayHeader.get(i).getMonth()==month && _listDayHeader.get(i).getDayOfMonth()==dayOfMonth){
-                if(_listDayHeader.get(i).getDayEventList().size()>0){
+    private boolean hasChildren(int year, int month, int dayOfMonth) {
+
+        for (int i = 0; i < _listDayHeader.size(); i++) {
+            if (_listDayHeader.get(i).getYear() == year && _listDayHeader.get(i).getMonth() == month && _listDayHeader.get(i).getDayOfMonth() == dayOfMonth) {
+                if (_listDayHeader.get(i).getDayEventList().size() > 0) {
                     return true;
                 }
             }

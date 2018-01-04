@@ -20,7 +20,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             INSTANCE =
                     //Room.inMemoryDatabaseBuilder(context.getApplicationContext(), AppDatabase.class)
-                            Room.databaseBuilder(context, AppDatabase.class, "eventdatabase")
+                    Room.databaseBuilder(context, AppDatabase.class, "eventdatabase")
                             .allowMainThreadQueries()
                             .fallbackToDestructiveMigration()
                             .build();

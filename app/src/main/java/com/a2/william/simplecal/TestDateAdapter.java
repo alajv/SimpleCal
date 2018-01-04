@@ -12,6 +12,10 @@ import java.util.ArrayList;
 
 /**
  * Created by William on 2017-11-15.
+ *
+ * This class is not used. Was made when learning how to make a custom adapter.
+ * Might not work properly with current code, have not tested/used after refactoring and alot of
+ * other things have changed.
  */
 
 public class TestDateAdapter extends ArrayAdapter<Day> {
