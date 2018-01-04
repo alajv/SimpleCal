@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -142,20 +143,18 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 Commented out because it doenst work properly. Some items that should have getChildrenCount = 0
                 also show as bold after i add a DayEvent to a Day.
                 */
-                if (getChildrenCount(groupPosition) == 0) {
-                    dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
-                    dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
-                } else {
-                    dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
-                    dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
+                /*
+                if (getChildrenCount(groupPosition) > 0) {
                     dayOfMonthTextView.setTypeface(null, Typeface.BOLD);
                     dayOfWeekTextView.setTypeface(null, Typeface.BOLD);
                 }
-
+                */
                 dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
                 dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
 
                 convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
+                ExpandableListView eLV = (ExpandableListView) parent;
+                eLV.expandGroup(groupPosition);
 
                 return convertView;
 

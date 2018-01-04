@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase database;
     List<DayEvent> tempDayEventList;
     Calendar cal;
+    int totalChildren;
+    int childrenOverFirstVisible = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +74,26 @@ public class MainActivity extends AppCompatActivity {
              */
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                getSupportActionBar().setTitle(dayStore.getListOfDays().get(firstVisibleItem).getMonthString() + " " + dayStore.getListOfDays().get(firstVisibleItem).getYearString());
+
+                int first = expListView.getFirstVisiblePosition();
+                int last = expListView.getLastVisiblePosition();
+
+                int count = last - first;
+                //long holder = expListView.getExpandableListPosition(expListView.getPackedPositionForChild(packed));
+                //int showPos = (int)holder;
+                for(int i = 0; i<count; i++){
+                 //   for(int j = 0; j<dayStore.get)
+                    long packed = expListView.getExpandableListPosition(i + first);
+
+                    int group = ExpandableListView.getPackedPositionGroup(packed);
+                    int child = ExpandableListView.getPackedPositionChild(packed);
+                }
+                //if(firstVisibleItem-totalChildren<0){
+                    getSupportActionBar().setTitle(dayStore.getListOfDays().get(showPos).getMonthString() + " " + dayStore.getListOfDays().get(firstVisibleItem).getYearString());
+                //}else{
+                //    getSupportActionBar().setTitle(dayStore.getListOfDays().get(firstVisibleItem-totalChildren).getMonthString() + " " + dayStore.getListOfDays().get(firstVisibleItem).getYearString());
+               //}
+
             }
         });
     }
@@ -126,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     Fills a Day's dayEventList with dayEvents from DB
      */
     private void fillDayEventList() {
-
+        totalChildren = 0;
         for (int i = 0; i < dayStore.getListOfDays().size(); i++) {
             dayStore.getListOfDays().get(i).getDayEventList().clear();
             tempDayEventList = database.dayEventDao().getDayEventsFromDB(dayStore.getListOfDays().get(i).getYear(),
@@ -142,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                                 tempDayEventList.get(j).getStartTime(),
                                 tempDayEventList.get(j).getEndTime(),
                                 tempDayEventList.get(j).idPlease());
+                        totalChildren++;
                     }
                 }
                 tempDayEventList.clear();
