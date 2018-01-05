@@ -11,6 +11,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import static com.a2.william.simplecal.MyUtil.*;
 
 import java.util.List;
 
@@ -24,16 +25,16 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "ExpandableDayAdapter";
 
     private Context _context;
-    private List<Day> _listDayHeader;
+    private List<Day> _dayList;
 
     public ExpandableDayAdapter(Context context, List<Day> listDayHeader) {
         this._context = context;
-        this._listDayHeader = listDayHeader;
+        this._dayList = listDayHeader;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return this._listDayHeader.get(groupPosition).getDayEventList().get(childPosition);
+        return this._dayList.get(groupPosition).getDayEventList().get(childPosition);
     }
 
     @Override
@@ -57,6 +58,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         final ImageButton deleteButton = convertView.findViewById(R.id.deleteButton);
         deleteButton.setVisibility(View.INVISIBLE);
         deleteButton.setClickable(true);
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +72,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 }
             }
         });
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,24 +88,24 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         addStartHour.setText(dayEvent.getStartTime());
         addEventName.setText(dayEvent.getEventName());
         endTime.setText(dayEvent.getEndTime());
-        convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
+        convertView.setBackgroundColor(Color.parseColor(getMonthColor(groupPosition, _dayList)));
 
         return convertView;
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return this._listDayHeader.get(groupPosition).getDayEventList().size();
+        return this._dayList.get(groupPosition).getDayEventList().size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return this._listDayHeader.get(groupPosition);
+        return this._dayList.get(groupPosition);
     }
 
     @Override
     public int getGroupCount() {
-        return this._listDayHeader.size();
+        return this._dayList.size();
     }
 
     @Override
@@ -117,7 +120,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupType(int groupPosition) {
-        if (_listDayHeader.get(groupPosition).isRealDay()) {
+        if (_dayList.get(groupPosition).isRealDay()) {
             return 0;
         } else {
             return 1;
@@ -140,7 +143,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 TextView dayOfWeekTextView = convertView.findViewById(R.id.day_of_week);
                 /*
                 Supposed to set bold text on groups in listview that have events in their dayEventList.
-                Commented out because it doenst work properly. Some items that should have getChildrenCount = 0
+                Commented out because it doenst work properly. Some items that have getChildrenCount = 0
                 also show as bold after i add a DayEvent to a Day.
                 */
                 /*
@@ -149,12 +152,12 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                     dayOfWeekTextView.setTypeface(null, Typeface.BOLD);
                 }
                 */
-                dayOfMonthTextView.setText(_listDayHeader.get(groupPosition).getDayOfMonthString());
-                dayOfWeekTextView.setText(_listDayHeader.get(groupPosition).getShortDayOfWeekString());
+                dayOfMonthTextView.setText(_dayList.get(groupPosition).getDayOfMonthString());
+                dayOfWeekTextView.setText(_dayList.get(groupPosition).getShortDayOfWeekString());
 
-                convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
-                ExpandableListView eLV = (ExpandableListView) parent;
-                eLV.expandGroup(groupPosition);
+                convertView.setBackgroundColor(Color.parseColor(getMonthColor(groupPosition, _dayList)));
+                ExpandableListView expListView = (ExpandableListView) parent;
+                expListView.expandGroup(groupPosition);
 
                 return convertView;
 
@@ -166,12 +169,12 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
                 }
                 TextView monthHeader = convertView.findViewById(R.id.monthHeader);
                 TextView yearHeader = convertView.findViewById(R.id.yearHeader);
-                monthHeader.setText(_listDayHeader.get(groupPosition).getMonthString());
-                yearHeader.setText(_listDayHeader.get(groupPosition).getYearString());
+                monthHeader.setText(_dayList.get(groupPosition).getMonthString());
+                yearHeader.setText(_dayList.get(groupPosition).getYearString());
                 monthHeader.setTypeface(null, Typeface.BOLD);
                 yearHeader.setTypeface(null, Typeface.BOLD);
 
-                convertView.setBackgroundColor(Color.parseColor(getColor(groupPosition)));
+                convertView.setBackgroundColor(Color.parseColor(getMonthColor(groupPosition, _dayList)));
 
                 return convertView;
         }
@@ -187,47 +190,12 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    /*
-    Returns hex color code for layout item based on what
-    month the item is associated with.
-     */
-    public String getColor(int groupPosition) {
-
-        switch (_listDayHeader.get(groupPosition).getMonth()) {
-            case 0:
-                return "#B2EBF2";
-            case 1:
-                return "#B2DFDB";
-            case 2:
-                return "#C8E6C9";
-            case 3:
-                return "#DCEDC8";
-            case 4:
-                return "#F0F4C3";
-            case 5:
-                return "#FFF9C4";
-            case 6:
-                return "#FFECB3";
-            case 7:
-                return "#FFE0B2";
-            case 8:
-                return "#FFCCBC";
-            case 9:
-                return "#D7CCC8";
-            case 10:
-                return "#F5F5F5";
-            case 11:
-                return "#CFD8DC";
-            default:
-                return "";
-        }
-    }
 
     private boolean hasChildren(int year, int month, int dayOfMonth) {
 
-        for (int i = 0; i < _listDayHeader.size(); i++) {
-            if (_listDayHeader.get(i).getYear() == year && _listDayHeader.get(i).getMonth() == month && _listDayHeader.get(i).getDayOfMonth() == dayOfMonth) {
-                if (_listDayHeader.get(i).getDayEventList().size() > 0) {
+        for (int i = 0; i < _dayList.size(); i++) {
+            if (_dayList.get(i).getYear() == year && _dayList.get(i).getMonth() == month && _dayList.get(i).getDayOfMonth() == dayOfMonth) {
+                if (_dayList.get(i).getDayEventList().size() > 0) {
                     return true;
                 }
             }

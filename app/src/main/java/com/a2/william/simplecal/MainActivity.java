@@ -2,10 +2,13 @@ package com.a2.william.simplecal;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
@@ -15,6 +18,8 @@ import android.widget.Toast;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
+import static com.a2.william.simplecal.MyUtil.*;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
     AppDatabase database;
     List<DayEvent> tempDayEventList;
     Calendar cal;
-    int totalChildren;
-    int childrenOverFirstVisible = 0;
+    //int lastExpandedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
                 dayStore.getListOfDays().get(0).getMonth(),
                 dayStore.getListOfDays().get(0).getDayOfMonth());
 
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         fab = findViewById(R.id.fab);
 
         adapter = new ExpandableDayAdapter(this, dayStore.getListOfDays());
@@ -69,31 +76,17 @@ public class MainActivity extends AppCompatActivity {
             public void onScrollStateChanged(AbsListView view, int scrollState) {
             }
             /*
-            Checks firstVisibleItem in expListView on scroll and sets Actionbar title to show month and year of firstVisibleItem.
-            Does not work as intended. When groups are expanded, first visibleVisibleItem does not return correct value.
+            Checks first visible group in listview and sets text in ActionBar to
+            month and year of first visible group. Also sets color of ActionBar
+            to a color that represents that month.
              */
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
-                int first = expListView.getFirstVisiblePosition();
-                int last = expListView.getLastVisiblePosition();
-
-                int count = last - first;
-                //long holder = expListView.getExpandableListPosition(expListView.getPackedPositionForChild(packed));
-                //int showPos = (int)holder;
-                for(int i = 0; i<count; i++){
-                 //   for(int j = 0; j<dayStore.get)
-                    long packed = expListView.getExpandableListPosition(i + first);
-
-                    int group = ExpandableListView.getPackedPositionGroup(packed);
-                    int child = ExpandableListView.getPackedPositionChild(packed);
-                }
-                //if(firstVisibleItem-totalChildren<0){
-                    getSupportActionBar().setTitle(dayStore.getListOfDays().get(showPos).getMonthString() + " " + dayStore.getListOfDays().get(firstVisibleItem).getYearString());
-                //}else{
-                //    getSupportActionBar().setTitle(dayStore.getListOfDays().get(firstVisibleItem-totalChildren).getMonthString() + " " + dayStore.getListOfDays().get(firstVisibleItem).getYearString());
-               //}
-
+                getSupportActionBar().setBackgroundDrawable((new ColorDrawable
+                        (Color.parseColor(getMonthColor(getFirstVisibleGroup(), dayStore.getListOfDays())))));
+                getSupportActionBar().setTitle(Html.fromHtml(
+                        "<font color='#2F4F4F'>"+dayStore.getListOfDays().get(getFirstVisibleGroup()).getMonthString() + " " + dayStore.getListOfDays().get(firstVisibleItem).getYearString()+"</font>"));
             }
         });
     }
@@ -147,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
     Fills a Day's dayEventList with dayEvents from DB
      */
     private void fillDayEventList() {
-        totalChildren = 0;
         for (int i = 0; i < dayStore.getListOfDays().size(); i++) {
             dayStore.getListOfDays().get(i).getDayEventList().clear();
             tempDayEventList = database.dayEventDao().getDayEventsFromDB(dayStore.getListOfDays().get(i).getYear(),
@@ -163,11 +155,27 @@ public class MainActivity extends AppCompatActivity {
                                 tempDayEventList.get(j).getStartTime(),
                                 tempDayEventList.get(j).getEndTime(),
                                 tempDayEventList.get(j).idPlease());
-                        totalChildren++;
                     }
                 }
                 tempDayEventList.clear();
             }
         }
     }
+    /*
+    Returns first visible group in ExpandableListView.
+    I use this instead of firstVisibleItem in onScroll
+    because firstVisibleItem didnt work very good
+    with ExpandableListView when childs were visible.
+     */
+    public int getFirstVisibleGroup() {
+        int firstVis = expListView.getFirstVisiblePosition();
+        long packedPosition = expListView.getExpandableListPosition(firstVis);
+        return ExpandableListView.getPackedPositionGroup(packedPosition);
+    }
+   /* public int getLastVisibleGroup(){
+        int lastVis = expListView.getLastVisiblePosition();
+        long packedPosition = expListView.getExpandableListPosition(lastVis);
+        return ExpandableListView.getPackedPositionGroup(packedPosition);
+    }*/
+
 }

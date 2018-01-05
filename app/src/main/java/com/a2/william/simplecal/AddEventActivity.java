@@ -33,6 +33,10 @@ public class AddEventActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event_activity);
         database = AppDatabase.getDatabase(getApplicationContext());
+
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
         getSupportActionBar().setTitle("Add Event");
 
         startTimeEditText = findViewById(R.id.startTimeEditText);

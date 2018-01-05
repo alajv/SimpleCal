@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by William on 2017-11-10.
+ * Used for test in beginning of project.
  */
 
 public class FakeDayStore implements DayStore {

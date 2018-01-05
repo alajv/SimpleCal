@@ -28,7 +28,7 @@ public class DayEvent {
 
     /*
     This constructor is called when adding
-    DayEvents for dayEventList in Day.
+    DayEvents to dayEventList in Day.
     Room ignores this constructor.
      */
     @Ignore

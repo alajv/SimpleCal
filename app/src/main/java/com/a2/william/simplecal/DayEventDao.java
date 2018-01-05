@@ -18,7 +18,7 @@ public interface DayEventDao {
     void addDayEvent(DayEvent dayEvent);
 
     /*
-    Fills List with all dayEvents from specified day
+    Fills List with all DayEvents from specified day
      */
     @Query("select * from dayevent where " +
             " year = :year AND month = :month AND dayOfMonth = :dayOfMonth " +
@@ -35,8 +35,9 @@ public interface DayEventDao {
     void removeAllDayEvents();
 
     /*
-    Removes all passed dayEvents from DB. Gets called with
-    current day in MainActivity.
+    Removes all DayEvents that occurred earlier than
+    then the day it gets called with. Used on create
+    in MainActivity.
      */
     @Query("delete from dayevent where " +
             " year < :year and month < :month and dayOfMonth < :dayOfMonth")
