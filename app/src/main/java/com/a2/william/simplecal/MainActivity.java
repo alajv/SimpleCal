@@ -106,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
     /*
     Deletes dayEvent from DB. Also creates a AlertDialog to confirm or deny the deletion.
+    If user confirms, a Toast withe the text "Removed" shows at the bottom of the screen.
      */
     public void deleteDayEventFromDB(final int year, final int month, final int dayOfMonth, final String eventName, final int id) {
         Log.d(TAG, "deleteDayEventFromDB: i try to delete dis ok");
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         cal.set(year, month, dayOfMonth);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Do you want to remove the event " + eventName + "' from " + cal.get(Calendar.DAY_OF_MONTH) +
+        alertDialogBuilder.setMessage("Do you want to remove the event " + eventName + " from " + cal.get(Calendar.DAY_OF_MONTH) +
                 " " + cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) +
                 " " + cal.get(Calendar.YEAR) + ".")
                 .setCancelable(false)

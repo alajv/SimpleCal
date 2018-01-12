@@ -32,6 +32,7 @@ public class ExpandableDayAdapter extends BaseExpandableListAdapter {
         this._dayList = listDayHeader;
     }
 
+
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         return this._dayList.get(groupPosition).getDayEventList().get(childPosition);

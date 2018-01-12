@@ -18,7 +18,7 @@ public class CalendarDayStore implements DayStore {
     }
 
     /*
-    Fills calendarDayList with 365 days, starting from this day.
+    Fills calendarDayList with 365 days, starting from  today.
     If the month of the Day that is about to be added to the list
     is not equal to the month of the last added day, two day objects
     will be added to the list. One with realDay: false, and one
